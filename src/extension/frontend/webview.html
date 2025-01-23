@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Codebase Chatbot</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 10px;
+      }
+      #chat {
+        height: 300px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+      }
+      #input {
+        width: 100%;
+        padding: 10px;
+      }
+      #send {
+        padding: 10px 20px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Codebase Chatbot</h1>
+    <div id="chat"></div>
+    <input id="input" type="text" placeholder="Ask a question..." />
+    <button id="send">Send</button>
+    <script>
+      const vscode = acquireVsCodeApi();
+      const chat = document.getElementById("chat");
+      const input = document.getElementById("input");
+      const send = document.getElementById("send");
+
+      send.addEventListener("click", () => {
+        const question = input.value;
+        if (question.trim()) {
+          appendMessage("You", question);
+          vscode.postMessage({ command: "query", text: question });
+          input.value = "";
+        }
+      });
+
+      window.addEventListener("message", (event) => {
+        const message = event.data;
+        if (message.command === "response") {
+          appendMessage("Bot", message.text);
+        }
+      });
+
+      function appendMessage(sender, text) {
+        const message = document.createElement("div");
+        message.textContent = \`\${sender}: \${text}\`;
+        chat.appendChild(message);
+        chat.scrollTop = chat.scrollHeight;
+      }
+    </script>
+  </body>
+</html>

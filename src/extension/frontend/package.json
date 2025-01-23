@@ -1,0 +1,22 @@
+{
+  "name": "codebase-chatbot",
+  "displayName": "Codebase Chatbot",
+  "description": "Chatbot to query the codebase.",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "activationEvents": [
+    "onCommand:codebase-chatbot.startChat"
+  ],
+  "main": "extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codebase-chatbot.startChat",
+        "title": "Start Codebase Chatbot"
+      }
+    ]
+  },
+  "dependencies": {}
+}
